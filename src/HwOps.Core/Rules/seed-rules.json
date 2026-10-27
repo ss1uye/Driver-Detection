@@ -1,5 +1,5 @@
 {
-  "rulesVersion": "2026.10.1",
+  "rulesVersion": "2026.10.2",
   "rules": [
     { "id": "oem-lenovo", "tier": 2, "match": { "type": "oem", "manufacturerPattern": "Lenovo|联想" }, "title": "联想官方驱动支持", "urlTemplate": "https://newsupport.lenovo.com.cn/", "note": "输入主机编号或选择机型，进入驱动下载" },
     { "id": "oem-dell", "tier": 2, "match": { "type": "oem", "manufacturerPattern": "Dell|戴尔" }, "title": "戴尔官方驱动支持", "urlTemplate": "https://www.dell.com/support/home/zh-cn", "note": "用服务编号或型号查找驱动" },
@@ -32,14 +32,14 @@
     { "id": "bt-realtek", "tier": 1, "match": { "type": "usb", "vendorId": "0BDA", "classPattern": "^Bluetooth$" }, "title": "Realtek 蓝牙驱动", "urlTemplate": "https://www.realtek.com/Download/List?cate_id=585", "note": "选择蓝牙芯片系列" },
     { "id": "bt-mediatek", "tier": 1, "match": { "type": "usb", "vendorId": "0E8D", "classPattern": "^Bluetooth$" }, "title": "MediaTek 蓝牙驱动", "urlTemplate": "https://www.mediatek.cn/", "note": "按芯片型号在支持页查找" },
     { "id": "audio-realtek", "tier": 1, "match": { "type": "pci", "vendorId": "10EC", "classPattern": "^Media$" }, "title": "Realtek 声卡驱动", "urlTemplate": "https://www.realtek.com/Download/List?cate_id=594", "note": "选择 High Definition Audio 系列" },
-    { "id": "audio-conexant", "tier": 1, "match": { "type": "pci", "vendorId": "14F1", "classPattern": "^Media$" }, "title": "Conexant 声卡驱动", "urlTemplate": "https://www.conexant.com/", "note": "建议优先使用整机厂商页面" },
-    { "id": "chipset-intel", "tier": 1, "match": { "type": "pci", "vendorId": "8086", "classPattern": "^System$" }, "title": "Intel 芯片组驱动", "urlTemplate": "https://www.intel.cn/content/www/cn/zh/download-center/home.html", "note": "搜索芯片组型号；主板厂商页面通常更准确" },
-    { "id": "chipset-amd", "tier": 1, "match": { "type": "pci", "vendorId": "1022", "classPattern": "^System$" }, "title": "AMD 芯片组驱动", "urlTemplate": "https://www.amd.com/zh-cn/support/download/drivers.html", "note": "选择芯片组型号；主板厂商页面通常更准确" },
-    { "id": "touchpad-synaptics", "tier": 1, "match": { "type": "usb", "vendorId": "06CB", "classPattern": "^Mouse$" }, "title": "Synaptics 触控板驱动", "urlTemplate": "https://www.synaptics.com/products/touchpad-family", "note": "建议优先使用笔记本厂商页面" },
-    { "id": "touchpad-elan", "tier": 1, "match": { "type": "usb", "vendorId": "04F3", "classPattern": "^Mouse$" }, "title": "ELAN 触控板驱动", "urlTemplate": "https://www.elantech.com/", "note": "建议优先使用笔记本厂商页面" },
-    { "id": "fingerprint-goodix", "tier": 1, "match": { "type": "usb", "vendorId": "27C6", "classPattern": "^Biometric$" }, "title": "Goodix 指纹驱动", "urlTemplate": "https://www.goodix.com/zh/support", "note": "建议优先使用笔记本厂商页面" },
-    { "id": "camera-sonix", "tier": 1, "match": { "type": "usb", "vendorId": "0C45", "classPattern": "^Camera$|^Image$" }, "title": "Sonix 摄像头驱动", "urlTemplate": "https://www.sonix.com.tw/", "note": "建议优先使用笔记本厂商页面" },
-    { "id": "camera-sunplus", "tier": 1, "match": { "type": "usb", "vendorId": "1BCF", "classPattern": "^Camera$|^Image$" }, "title": "Sunplus 摄像头驱动", "urlTemplate": "https://www.sunplus.com/", "note": "建议优先使用笔记本厂商页面" },
+    { "id": "audio-conexant", "tier": 4, "match": { "type": "pci", "vendorId": "14F1", "classPattern": "^Media$" }, "title": "Conexant 声卡驱动", "urlTemplate": "https://www.conexant.com/", "note": "建议优先使用整机厂商页面" },
+    { "id": "chipset-intel", "tier": 4, "match": { "type": "pci", "vendorId": "8086", "classPattern": "^System$" }, "title": "Intel 芯片组驱动", "urlTemplate": "https://www.intel.cn/content/www/cn/zh/download-center/home.html", "note": "搜索芯片组型号；主板厂商页面通常更准确" },
+    { "id": "chipset-amd", "tier": 4, "match": { "type": "pci", "vendorId": "1022", "classPattern": "^System$" }, "title": "AMD 芯片组驱动", "urlTemplate": "https://www.amd.com/zh-cn/support/download/drivers.html", "note": "选择芯片组型号；主板厂商页面通常更准确" },
+    { "id": "touchpad-synaptics", "tier": 4, "match": { "type": "usb", "vendorId": "06CB", "classPattern": "^Mouse$" }, "title": "Synaptics 触控板驱动", "urlTemplate": "https://www.synaptics.com/products/touchpad-family", "note": "建议优先使用笔记本厂商页面" },
+    { "id": "touchpad-elan", "tier": 4, "match": { "type": "usb", "vendorId": "04F3", "classPattern": "^Mouse$" }, "title": "ELAN 触控板驱动", "urlTemplate": "https://www.elantech.com/", "note": "建议优先使用笔记本厂商页面" },
+    { "id": "fingerprint-goodix", "tier": 4, "match": { "type": "usb", "vendorId": "27C6", "classPattern": "^Biometric$" }, "title": "Goodix 指纹驱动", "urlTemplate": "https://www.goodix.com/zh/support", "note": "建议优先使用笔记本厂商页面" },
+    { "id": "camera-sonix", "tier": 4, "match": { "type": "usb", "vendorId": "0C45", "classPattern": "^Camera$|^Image$" }, "title": "Sonix 摄像头驱动", "urlTemplate": "https://www.sonix.com.tw/", "note": "建议优先使用笔记本厂商页面" },
+    { "id": "camera-sunplus", "tier": 4, "match": { "type": "usb", "vendorId": "1BCF", "classPattern": "^Camera$|^Image$" }, "title": "Sunplus 摄像头驱动", "urlTemplate": "https://www.sunplus.com/", "note": "建议优先使用笔记本厂商页面" },
     { "id": "catalog-fallback", "tier": 5, "match": { "type": "any" }, "title": "Microsoft Update Catalog 搜索 {hardwareId}", "urlTemplate": "https://www.catalog.update.microsoft.com/Search.aspx?q={hardwareId}", "note": "用硬件 ID 搜索官方驱动包，适合未知设备" }
   ]
 }
