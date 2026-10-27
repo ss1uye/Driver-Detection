@@ -467,6 +467,7 @@ public sealed class MainForm : Form
         var link = new LinkLabel
         {
             Text = suggestion.Title,
+            UseMnemonic = false,
             AutoSize = true,
             Margin = new Padding(0, 2, 0, 2)
         };
