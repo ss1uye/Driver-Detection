@@ -55,11 +55,20 @@ public sealed class RuleMatcher
                 continue;
             }
 
-            result.Add(ToSuggestion(rule, snapshot, device, "硬件 ID 匹配"));
+            result.Add(ToSuggestion(rule, snapshot, device, DeviceMatchReason(type)));
         }
 
         return result;
     }
+
+    private static string DeviceMatchReason(string? type)
+        => type switch
+        {
+            "pci" or "usb" => "硬件 ID 匹配",
+            "class" => "设备类别匹配",
+            "any" or null => "通用兜底",
+            _ => "规则匹配"
+        };
 
     private static bool Matches(DriverRule rule, HardwareSnapshot snapshot, DeviceInfo? device)
     {
@@ -165,7 +174,7 @@ public sealed class RuleMatcher
             Tier = rule.Tier,
             Title = Render(rule.Title, snapshot, device, escape: false),
             Url = Render(rule.UrlTemplate, snapshot, device, escape: true),
-            Note = rule.Note,
+            Note = rule.Note is null ? null : Render(rule.Note, snapshot, device, escape: false),
             MatchReason = reason
         };
 

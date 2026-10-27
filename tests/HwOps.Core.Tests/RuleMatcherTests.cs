@@ -21,7 +21,8 @@ public class RuleMatcherTests
             Tier = 3,
             Match = new RuleMatch { Type = "board", ManufacturerPattern = "ASUSTeK|ASUS" },
             Title = "华硕 {boardProduct} 驱动",
-            UrlTemplate = "https://example.com/download/{boardProduct}"
+            UrlTemplate = "https://example.com/download/{boardProduct}",
+            Note = "在支持页搜索 {boardProduct}"
         });
         var snapshot = new HardwareSnapshot
         {
@@ -32,6 +33,7 @@ public class RuleMatcherTests
 
         Assert.Equal("华硕 PRIME B560M-A 驱动", suggestion.Title);
         Assert.Equal("https://example.com/download/PRIME%20B560M-A", suggestion.Url);
+        Assert.Equal("在支持页搜索 PRIME B560M-A", suggestion.Note);
         Assert.Equal("主板型号匹配", suggestion.MatchReason);
     }
 
@@ -92,6 +94,43 @@ public class RuleMatcherTests
         var suggestion = new RuleMatcher(rules).SuggestForDevice(snapshot, device).Single();
 
         Assert.Equal("https://example.com/search?q=USB%5CVID_1234%26PID_5678", suggestion.Url);
+        Assert.Equal("通用兜底", suggestion.MatchReason);
+    }
+
+    [Fact]
+    public void SuggestForDevice_MatchesUsbVidPid()
+    {
+        var rules = Rules(new DriverRule
+        {
+            Id = "bt-intel",
+            Tier = 1,
+            Match = new RuleMatch { Type = "usb", VendorId = "8087", DeviceId = "0026", ClassPattern = "^Bluetooth$" },
+            Title = "Intel 蓝牙驱动",
+            UrlTemplate = "https://example.com/bluetooth"
+        });
+        var device = new DeviceInfo { ClassName = "Bluetooth", PnpId = "USB\\VID_8087&PID_0026&REV_0001" };
+        var snapshot = new HardwareSnapshot { Devices = { device } };
+
+        var suggestion = new RuleMatcher(rules).SuggestForDevice(snapshot, device).Single();
+
+        Assert.Equal("硬件 ID 匹配", suggestion.MatchReason);
+    }
+
+    [Fact]
+    public void SuggestForDevice_DoesNotCrossMatchBusType()
+    {
+        var rules = Rules(new DriverRule
+        {
+            Id = "bt-intel",
+            Tier = 1,
+            Match = new RuleMatch { Type = "usb", VendorId = "8087", DeviceId = "0026" },
+            Title = "Intel 蓝牙驱动",
+            UrlTemplate = "https://example.com/bluetooth"
+        });
+        var device = new DeviceInfo { ClassName = "Bluetooth", PnpId = "PCI\\VEN_8087&DEV_0026" };
+        var snapshot = new HardwareSnapshot { Devices = { device } };
+
+        Assert.Empty(new RuleMatcher(rules).SuggestForDevice(snapshot, device));
     }
 
     [Fact]
