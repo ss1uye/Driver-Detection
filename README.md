@@ -41,6 +41,7 @@ powershell -ExecutionPolicy Bypass -File scripts/build.ps1
 
 脚本会先跑 Release 全量测试，再清理 `dist/agent` 与历史探针目录，最后单文件自包含发布。
 输出：`dist/agent/HwOps.Agent.exe`（实测约 50 MB，目标机免装 .NET 运行时）。
+`dist/agent/BUILD-INFO.txt` 记录本次发布的 commit 与时间，验收前先确认它与 HEAD 一致。
 
 ## 功能范围（M1）
 
