@@ -16,6 +16,7 @@ internal static class Wmi
             if (scopePath is not null)
             {
                 scope = new ManagementScope(scopePath);
+                scope.Options.Timeout = TimeSpan.FromSeconds(10);
                 scope.Connect();
             }
 
@@ -25,20 +26,29 @@ internal static class Wmi
             searcher.Options.Timeout = TimeSpan.FromSeconds(5);
 
             using var results = searcher.Get();
+            var rowIndex = 0;
             foreach (ManagementObject item in results)
             {
+                rowIndex++;
                 using (item)
                 {
-                    map(item);
+                    try
+                    {
+                        map(item);
+                    }
+                    catch (Exception ex) when (ex is not OperationCanceledException)
+                    {
+                        warnings.Add($"{label}[第 {rowIndex} 行]: {ex.Message}");
+                    }
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception ex) when (ex is not OperationCanceledException)
         {
             warnings.Add($"{label}: {ex.Message}");
         }
-        // System.Management 8.0.0 的 ManagementScope 未实现 IDisposable（仅有 Connect/IsConnected），
-        // 其底层 WMI 绑定由类型自身 finalizer 释放，无需也不能显式 Dispose。
+        // ManagementScope 未实现 IDisposable（只有 Connect/IsConnected），
+        // 其内部 WMI 会话由 RCW/GC 回收，因此不能也不需要显式 Dispose。
     }
 
     public static string? Text(this ManagementObject item, string property)

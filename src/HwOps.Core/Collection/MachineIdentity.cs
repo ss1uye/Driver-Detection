@@ -59,7 +59,9 @@ public static class MachineIdentity
         try
         {
             return NetworkInterface.GetAllNetworkInterfaces()
-                .Where(n => n.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                .Where(n => n.NetworkInterfaceType is NetworkInterfaceType.Ethernet or NetworkInterfaceType.Wireless80211)
+                .Where(n => n.OperationalStatus != OperationalStatus.NotPresent)
+                .OrderBy(n => n.Id, StringComparer.Ordinal)
                 .Select(n => n.GetPhysicalAddress().ToString())
                 .FirstOrDefault(mac => mac.Length == 12) ?? "";
         }

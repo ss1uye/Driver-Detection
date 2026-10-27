@@ -9,6 +9,9 @@
     <PackageReference Include="System.Management" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <InternalsVisibleTo Include="HwOps.Core.Tests" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Rules\seed-rules.json">
       <LogicalName>HwOps.Core.Rules.seed-rules.json</LogicalName>
     </EmbeddedResource>
