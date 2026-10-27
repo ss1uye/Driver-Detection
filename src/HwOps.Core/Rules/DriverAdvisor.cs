@@ -47,7 +47,9 @@ public sealed class DriverAdvisor
                                  PnpId = problem.PnpId,
                                  ProblemCode = problem.ProblemCode
                              };
-                return ToAdvice(snapshot, device);
+                var advice = ToAdvice(snapshot, device);
+                advice.ProblemCode = problem.ProblemCode;
+                return advice;
             })
             .ToList();
 
