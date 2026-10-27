@@ -1,11 +1,11 @@
 {
-  "rulesVersion": "2026.10.2",
+  "rulesVersion": "2026.10.3",
   "rules": [
     { "id": "oem-lenovo", "tier": 2, "match": { "type": "oem", "manufacturerPattern": "Lenovo|联想" }, "title": "联想官方驱动支持", "urlTemplate": "https://newsupport.lenovo.com.cn/", "note": "输入主机编号或选择机型，进入驱动下载" },
     { "id": "oem-dell", "tier": 2, "match": { "type": "oem", "manufacturerPattern": "Dell|戴尔" }, "title": "戴尔官方驱动支持", "urlTemplate": "https://www.dell.com/support/home/zh-cn", "note": "用服务编号或型号查找驱动" },
     { "id": "oem-hp", "tier": 2, "match": { "type": "oem", "manufacturerPattern": "HP|Hewlett|惠普" }, "title": "惠普官方驱动支持", "urlTemplate": "https://support.hp.com/cn-zh/drivers", "note": "输入产品名称或序列号" },
     { "id": "oem-asus", "tier": 2, "match": { "type": "oem", "manufacturerPattern": "ASUS|ASUSTeK|华硕" }, "title": "华硕官方驱动支持", "urlTemplate": "https://www.asus.com.cn/support/", "note": "搜索机型后进入驱动程序和工具" },
-    { "id": "oem-acer", "tier": 2, "match": { "type": "oem", "manufacturerPattern": "Acer|宏碁" }, "title": "宏碁官方驱动支持", "urlTemplate": "https://www.acer.com.cn/support.html", "note": "按机型查找驱动" },
+    { "id": "oem-acer", "tier": 2, "match": { "type": "oem", "manufacturerPattern": "Acer|宏碁" }, "title": "宏碁官方驱动支持", "urlTemplate": "https://www.acer.com.cn/", "note": "进入官网后选择「支持 - 驱动和手册」，按机型查找驱动" },
     { "id": "oem-huawei", "tier": 2, "match": { "type": "oem", "manufacturerPattern": "Huawei|华为" }, "title": "华为官方支持", "urlTemplate": "https://consumer.huawei.com/cn/support/", "note": "搜索 MateBook 型号" },
     { "id": "oem-xiaomi", "tier": 2, "match": { "type": "oem", "manufacturerPattern": "Xiaomi|小米|Redmi" }, "title": "小米笔记本服务支持", "urlTemplate": "https://www.mi.com/service/bijiben/", "note": "选择型号进入驱动下载" },
     { "id": "oem-honor", "tier": 2, "match": { "type": "oem", "manufacturerPattern": "HONOR|荣耀" }, "title": "荣耀官方支持", "urlTemplate": "https://www.honor.com/cn/support/", "note": "搜索 MagicBook 型号" },
@@ -37,7 +37,7 @@
     { "id": "chipset-amd", "tier": 4, "match": { "type": "pci", "vendorId": "1022", "classPattern": "^System$" }, "title": "AMD 芯片组驱动", "urlTemplate": "https://www.amd.com/zh-cn/support/download/drivers.html", "note": "选择芯片组型号；主板厂商页面通常更准确" },
     { "id": "touchpad-synaptics", "tier": 4, "match": { "type": "usb", "vendorId": "06CB", "classPattern": "^Mouse$" }, "title": "Synaptics 触控板驱动", "urlTemplate": "https://www.synaptics.com/products/touchpad-family", "note": "建议优先使用笔记本厂商页面" },
     { "id": "touchpad-elan", "tier": 4, "match": { "type": "usb", "vendorId": "04F3", "classPattern": "^Mouse$" }, "title": "ELAN 触控板驱动", "urlTemplate": "https://www.elantech.com/", "note": "建议优先使用笔记本厂商页面" },
-    { "id": "fingerprint-goodix", "tier": 4, "match": { "type": "usb", "vendorId": "27C6", "classPattern": "^Biometric$" }, "title": "Goodix 指纹驱动", "urlTemplate": "https://www.goodix.com/zh/support", "note": "建议优先使用笔记本厂商页面" },
+    { "id": "fingerprint-goodix", "tier": 4, "match": { "type": "usb", "vendorId": "27C6", "classPattern": "^Biometric$" }, "title": "Goodix 指纹驱动", "urlTemplate": "https://www.goodix.com/zh", "note": "官网无独立驱动页，建议优先使用笔记本厂商页面" },
     { "id": "camera-sonix", "tier": 4, "match": { "type": "usb", "vendorId": "0C45", "classPattern": "^Camera$|^Image$" }, "title": "Sonix 摄像头驱动", "urlTemplate": "https://www.sonix.com.tw/", "note": "建议优先使用笔记本厂商页面" },
     { "id": "camera-sunplus", "tier": 4, "match": { "type": "usb", "vendorId": "1BCF", "classPattern": "^Camera$|^Image$" }, "title": "Sunplus 摄像头驱动", "urlTemplate": "https://www.sunplus.com/", "note": "建议优先使用笔记本厂商页面" },
     { "id": "catalog-fallback", "tier": 5, "match": { "type": "any" }, "title": "Microsoft Update Catalog 搜索 {hardwareId}", "urlTemplate": "https://www.catalog.update.microsoft.com/Search.aspx?q={hardwareId}", "note": "用硬件 ID 搜索官方驱动包，适合未知设备" }
