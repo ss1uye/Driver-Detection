@@ -18,11 +18,9 @@ public static class MachineIdentity
         var machineGuid = ReadMachineGuid();
         if (!string.IsNullOrWhiteSpace(machineGuid))
         {
-            warnings.Add("机器标识: SMBIOS UUID 不可用，已回退到 MachineGuid");
             return Hash(machineGuid!);
         }
 
-        warnings.Add("机器标识: SMBIOS UUID 与 MachineGuid 均不可用，已回退到主机名+MAC");
         return Hash(Environment.MachineName + "|" + ReadFirstMac());
     }
 
