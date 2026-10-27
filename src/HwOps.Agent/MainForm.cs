@@ -9,8 +9,6 @@ namespace HwOps.Agent;
 
 public sealed class MainForm : Form
 {
-    private const string ToolVersion = "0.1.0";
-
     private readonly IHardwareCollector _collector = new WmiHardwareCollector();
     private readonly RuleSet _rules;
     private readonly ToolTip _toolTip = new();
@@ -535,7 +533,7 @@ public sealed class MainForm : Form
 
         try
         {
-            File.WriteAllText(dialog.FileName, HtmlReportBuilder.Build(_snapshot, _advice, ToolVersion), new UTF8Encoding(true));
+            File.WriteAllText(dialog.FileName, HtmlReportBuilder.Build(_snapshot, _advice, AgentVersion.Current), new UTF8Encoding(true));
             _statusLabel.Text = "已导出 HTML：" + dialog.FileName;
         }
         catch (Exception ex)
