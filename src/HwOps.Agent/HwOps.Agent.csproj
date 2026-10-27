@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>HwOps.Agent</AssemblyName>
+    <RootNamespace>HwOps.Agent</RootNamespace>
+    <Product>硬件助手</Product>
+    <AssemblyTitle>硬件助手</AssemblyTitle>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HwOps.Core\HwOps.Core.csproj" />
+  </ItemGroup>
+</Project>
