@@ -1,3 +1,4 @@
+using System.Text.Json;
 using HwOps.Core.Models;
 using Xunit;
 
@@ -41,6 +42,8 @@ public class SnapshotSerializationTests
         Assert.Equal("PC-01", back!.System.Hostname);
         Assert.Single(back.Devices);
         Assert.Equal("PCI\\VEN_10DE&DEV_2504", back.Devices[0].PnpId);
+        Assert.Equal(DateTimeOffset.Parse("2026-10-27T09:00:00+08:00"), back.CollectedAt);
+        Assert.Equal(1, back.SchemaVersion);
     }
 
     [Fact]
@@ -52,5 +55,12 @@ public class SnapshotSerializationTests
         Assert.Equal("x", snapshot!.MachineId);
         Assert.Null(snapshot.System.Hostname);
         Assert.Empty(snapshot.Devices);
+    }
+
+    [Fact]
+    public void Deserialize_ExplicitNullCollection_Throws()
+    {
+        Assert.Throws<JsonException>(() =>
+            JsonDefaults.Deserialize<HardwareSnapshot>("""{"devices":null}"""));
     }
 }
