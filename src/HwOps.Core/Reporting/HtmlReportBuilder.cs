@@ -25,7 +25,7 @@ public static class HtmlReportBuilder
         summary{cursor:pointer;color:#2f6feb}
         """;
 
-    public static string Build(HardwareSnapshot snapshot, MachineAdvice advice, string toolVersion)
+    public static string Build(HardwareSnapshot snapshot, MachineAdvice advice, string toolVersion, string rulesVersion)
     {
         var sb = new StringBuilder(16 * 1024);
         sb.Append("<!DOCTYPE html><html lang=\"zh-CN\"><head><meta charset=\"utf-8\">")
@@ -36,7 +36,8 @@ public static class HtmlReportBuilder
         sb.Append("<h1>硬件体检报告</h1>");
         sb.Append("<p class=\"muted\">主机：").Append(E(snapshot.System.Hostname))
             .Append(" ｜ 采集时间：").Append(E(snapshot.CollectedAt.ToString("yyyy-MM-dd HH:mm:ss")))
-            .Append(" ｜ 工具版本：").Append(E(toolVersion)).Append("</p>");
+            .Append(" ｜ 工具版本：").Append(E(toolVersion))
+            .Append(" ｜ 规则版本：").Append(E(rulesVersion)).Append("</p>");
 
         AppendOverview(sb, snapshot);
         AppendProblems(sb, advice);

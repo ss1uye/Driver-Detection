@@ -533,7 +533,7 @@ public sealed class MainForm : Form
 
         try
         {
-            File.WriteAllText(dialog.FileName, HtmlReportBuilder.Build(_snapshot, _advice, AgentVersion.Current), new UTF8Encoding(true));
+            File.WriteAllText(dialog.FileName, HtmlReportBuilder.Build(_snapshot, _advice, AgentVersion.Current, _rules.RulesVersion), new UTF8Encoding(true));
             _statusLabel.Text = "已导出 HTML：" + dialog.FileName;
         }
         catch (Exception ex)

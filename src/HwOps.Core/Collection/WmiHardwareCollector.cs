@@ -138,12 +138,6 @@ public sealed class WmiHardwareCollector : IHardwareCollector
             .ToList();
     }
 
-    internal static bool IsVirtualPnpId(string? pnpId)
-        => string.IsNullOrEmpty(pnpId) // null 与空串均视为不可用的枚举 ID
-           || pnpId.StartsWith("ROOT\\", StringComparison.OrdinalIgnoreCase)
-           || pnpId.StartsWith("BTH\\", StringComparison.OrdinalIgnoreCase)
-           || pnpId.StartsWith("USBSTOR\\", StringComparison.OrdinalIgnoreCase);
-
     internal static string? ScrubSerial(string? value)
     {
         var trimmed = value?.Trim();
@@ -280,7 +274,7 @@ public sealed class WmiHardwareCollector : IHardwareCollector
         {
             token.ThrowIfCancellationRequested();
             var pnpId = item.Text("PNPDeviceID");
-            if (IsVirtualPnpId(pnpId))
+            if (DeviceIdPolicy.IsVirtualPnpId(pnpId))
             {
                 return; // 排除 ROOT\DISPLAY 等虚拟显示器，避免驱动建议误导运维
             }
@@ -315,7 +309,7 @@ public sealed class WmiHardwareCollector : IHardwareCollector
                     MediaType = item.Text("MediaType"),
                     SizeBytes = item.Long("Size"),
                     PnpId = item.Text("PNPDeviceID"),
-                    Serial = item.Text("SerialNumber")
+                    Serial = ScrubSerial(item.Text("SerialNumber"))
                 });
             });
 
@@ -372,7 +366,7 @@ public sealed class WmiHardwareCollector : IHardwareCollector
                     return;
                 }
 
-                if (IsVirtualPnpId(pnpId))
+                if (DeviceIdPolicy.IsVirtualPnpId(pnpId))
                 {
                     return; // 排除 ROOT\NET、BTH 虚拟/蓝牙枚举网卡
                 }

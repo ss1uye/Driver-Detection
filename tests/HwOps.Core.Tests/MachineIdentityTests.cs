@@ -6,6 +6,7 @@ namespace HwOps.Core.Tests;
 public class MachineIdentityTests
 {
     [Fact]
+    [Trait("Category", "Integration")] // 依赖本机 WMI / 注册表，非纯单元测试
     public void Get_ReturnsStable32CharHex()
     {
         var first = MachineIdentity.Get(new List<string>());

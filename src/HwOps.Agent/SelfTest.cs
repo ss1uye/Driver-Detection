@@ -28,7 +28,7 @@ internal static class SelfTest
 
         File.WriteAllText(
             Path.Combine(outputDirectory, "report.html"),
-            HtmlReportBuilder.Build(snapshot, advice, AgentVersion.Current),
+            HtmlReportBuilder.Build(snapshot, advice, AgentVersion.Current, rules.RulesVersion),
             new UTF8Encoding(true));
 
         var gpuSuggestionCount = advice.GpuDevices.Sum(g => g.Suggestions.Count);

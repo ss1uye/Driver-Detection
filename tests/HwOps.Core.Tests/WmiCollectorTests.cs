@@ -60,19 +60,6 @@ public class WmiCollectorTests
     }
 
     [Theory]
-    [InlineData(@"ROOT\DISPLAY\0000", true)]
-    [InlineData(@"BTH\MS_BTHPAN\X", true)]
-    [InlineData(@"USBSTOR\Disk&Ven_Kingston&Prod_SXRF", true)]
-    [InlineData(null, true)]
-    [InlineData("", true)]
-    [InlineData(@"PCI\VEN_10DE&DEV_2486&SUBSYS_36801462", false)]
-    [InlineData(@"PCI\VEN_10EC&DEV_8125&SUBSYS_7C571458", false)]
-    public void IsVirtualPnpId_ClassifiesRootAndRealDevices(string? pnpId, bool expected)
-    {
-        Assert.Equal(expected, WmiHardwareCollector.IsVirtualPnpId(pnpId));
-    }
-
-    [Theory]
     [InlineData("System Serial Number")]
     [InlineData("  To Be Filled By O.E.M.  ")]
     [InlineData("Type1 - Default string")]
@@ -80,6 +67,14 @@ public class WmiCollectorTests
     public void ScrubSerial_NormalizesPlaceholderToNull(string raw)
     {
         Assert.Null(WmiHardwareCollector.ScrubSerial(raw));
+    }
+
+    [Theory]
+    [InlineData("  ", null)]            // 纯空白 trim 后为空串，同样归一为 null
+    [InlineData("Unknown", "Unknown")]  // 不在已知占位词表内：按现实现原样保留，不改语义
+    public void ScrubSerial_ClassifiesBlankAndUnlistedPlaceholders(string raw, string? expected)
+    {
+        Assert.Equal(expected, WmiHardwareCollector.ScrubSerial(raw));
     }
 
     [Theory]

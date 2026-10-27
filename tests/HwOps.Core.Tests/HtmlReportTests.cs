@@ -77,7 +77,7 @@ public class HtmlReportTests
     [Fact]
     public void Build_EncodesHtml_AndIncludesAdviceLinks()
     {
-        var html = HtmlReportBuilder.Build(MakeSnapshot(), MakeAdvice(), "0.1.0");
+        var html = HtmlReportBuilder.Build(MakeSnapshot(), MakeAdvice(), "0.1.0", "2026.10.3");
 
         Assert.StartsWith("<!DOCTYPE html>", html);
         Assert.DoesNotContain("<script>alert(1)</script>", html);
@@ -86,6 +86,9 @@ public class HtmlReportTests
         Assert.Contains("问题设备", html);
         Assert.Contains("未安装驱动程序", html);
         Assert.Contains("0.1.0", html);
+        // 排障时需要知道报告出自哪一版规则库
+        Assert.Contains("规则版本", html);
+        Assert.Contains("2026.10.3", html);
     }
 
     [Fact]
@@ -105,7 +108,7 @@ public class HtmlReportTests
             }
         };
 
-        var html = HtmlReportBuilder.Build(MakeSnapshot(), advice, "0.1.0");
+        var html = HtmlReportBuilder.Build(MakeSnapshot(), advice, "0.1.0", "2026.10.3");
 
         Assert.DoesNotContain("href=\"javascript:", html);
         Assert.Contains("链接无效", html);
@@ -115,7 +118,7 @@ public class HtmlReportTests
     [Fact]
     public void Build_IncludesAllDeviceCountLabel()
     {
-        var html = HtmlReportBuilder.Build(MakeSnapshot(), MakeAdvice(), "0.1.0");
+        var html = HtmlReportBuilder.Build(MakeSnapshot(), MakeAdvice(), "0.1.0", "2026.10.3");
 
         Assert.Contains("全部设备（含软件与虚拟设备，共", html);
     }
@@ -126,7 +129,7 @@ public class HtmlReportTests
         var snapshot = MakeSnapshot();
         snapshot.Collection.Warnings.Add("磁盘: 模拟失败");
 
-        var html = HtmlReportBuilder.Build(snapshot, MakeAdvice(), "0.1.0");
+        var html = HtmlReportBuilder.Build(snapshot, MakeAdvice(), "0.1.0", "2026.10.3");
 
         Assert.Contains("采集告警", html);
         Assert.Contains("磁盘: 模拟失败", html);
