@@ -185,6 +185,62 @@ public class DriverAdvisorTests
         Assert.Equal(3, advice.ProblemDevices.Single().Suggestions.Count);
     }
 
+    [Fact]
+    public void Advise_ExcludesVirtualDisplayFromGpuAdvice_ButKeepsItAsProblemDevice()
+    {
+        var rules = new RuleSet
+        {
+            RulesVersion = "test",
+            Rules =
+            {
+                new DriverRule
+                {
+                    Id = "gpu-nvidia",
+                    Tier = 1,
+                    Match = new RuleMatch { Type = "pci", VendorId = "10DE", ClassPattern = "^Display$" },
+                    Title = "NVIDIA 驱动",
+                    UrlTemplate = "https://example.com/nvidia"
+                },
+                AnyRule("fallback", "https://example.com/catalog")
+            }
+        };
+        var realGpu = new DeviceInfo
+        {
+            ClassName = "Display",
+            Name = "NVIDIA GeForce RTX 3060",
+            PnpId = "PCI\\VEN_10DE&DEV_2504"
+        };
+        var virtualGpu = new DeviceInfo
+        {
+            ClassName = "Display",
+            Name = "OrayIddDriver Device",
+            PnpId = "ROOT\\DISPLAY\\0000",
+            ProblemCode = 28
+        };
+        var snapshot = new HardwareSnapshot
+        {
+            Devices = { realGpu, virtualGpu },
+            ProblemDevices =
+            {
+                new ProblemDevice
+                {
+                    PnpId = virtualGpu.PnpId,
+                    Name = virtualGpu.Name,
+                    ClassName = virtualGpu.ClassName,
+                    ProblemCode = 28,
+                    ProblemText = "未安装驱动程序"
+                }
+            }
+        };
+
+        var advice = new DriverAdvisor(rules).Advise(snapshot);
+
+        Assert.Equal("NVIDIA GeForce RTX 3060", Assert.Single(advice.GpuDevices).DeviceName);
+        var problem = Assert.Single(advice.ProblemDevices);
+        Assert.Equal("OrayIddDriver Device", problem.DeviceName);
+        Assert.Contains(problem.Suggestions, s => s.RuleId == "fallback");
+    }
+
     private static DriverRule AnyRule(string id, string url) => new()
     {
         Id = id,

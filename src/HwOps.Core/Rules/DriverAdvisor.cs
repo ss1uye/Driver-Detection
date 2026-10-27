@@ -1,3 +1,4 @@
+using HwOps.Core.Collection;
 using HwOps.Core.Models;
 
 namespace HwOps.Core.Rules;
@@ -32,6 +33,7 @@ public sealed class DriverAdvisor
 
         var gpuDevices = snapshot.Devices
             .Where(d => string.Equals(d.ClassName, "Display", StringComparison.OrdinalIgnoreCase))
+            .Where(d => !WmiHardwareCollector.IsVirtualPnpId(d.PnpId))
             .Select(d => ToAdvice(snapshot, d))
             .ToList();
 
